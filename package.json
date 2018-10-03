@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Potional/api-rest-adi/issues"
   },
-  "homepage": "https://github.com/Potional/api-rest-adi#readme"
+  "homepage": "https://github.com/Potional/api-rest-adi#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
 }
