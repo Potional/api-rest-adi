@@ -41,9 +41,20 @@ db.serialize(function() {
     db.run("INSERT INTO `Juego`(`ID`,`nombre`,`descripcion`,`trailer`,`edad_recomendada`,`Requerimientos`,`desarrolladora_id`) VALUES (NULL,'Assasins Creed Odyssey','Un juego de assasins creed mas','https://youtu.be/xqUejiCy6Tk',18,'OS: Windows 7 SP1, Windows 8.1, Windows 10 (64bit versions only)" 
     + "Processor: AMD FX 6300 @ 3.8 GHz, Ryzen 3 - 1200, Intel Core i5 2400 @ 3.1 GHz Memory: 8 GB RAM Graphics: AMD Radeon R9 285, NVIDIA GeForce GTX 660 (2GB VRAM with Shader Model 5.0) DirectX: Version 11 Storage: 46+ GB available space Video Preset: Lowest (720p)',1);");
     db.run("INSERT INTO `Juego`(`ID`,`nombre`,`descripcion`,`trailer`,`edad_recomendada`,`Requerimientos`,`desarrolladora_id`) VALUES (NULL,'Star Wars: Battlefront','Juego magnifico 10/10 - IGN','https://youtu.be/ZwWLns7-xN8',18,'Windows 64-bits',2);");
-    db.run("INSERT INTO `Juego`(`ID`,`nombre`,`descripcion`,`trailer`,`edad_recomendada`,`Requerimientos`,`desarrolladora_id`) VALUES (NULL,'','','','','','');");
-    db.run("INSERT INTO `Juego`(`ID`,`nombre`,`descripcion`,`trailer`,`edad_recomendada`,`Requerimientos`,`desarrolladora_id`) VALUES (NULL,'','','','','','');");
+    db.run("INSERT INTO `Juego`(`ID`,`nombre`,`descripcion`,`trailer`,`edad_recomendada`,`Requerimientos`,`desarrolladora_id`) VALUES (NULL,'Spiderman','Un buen juego de Spiderman','https://youtu.be/q4GdJVvdxss',18,'PS4',3);");
+    db.run("INSERT INTO `Juego`(`ID`,`nombre`,`descripcion`,`trailer`,`edad_recomendada`,`Requerimientos`,`desarrolladora_id`) VALUES (NULL,'Nier:Automata','Un buen juego de Nier','https://youtu.be/YKI1Jh43Ju8',18,'PS4',4);");
+    db.run("INSERT INTO `Juegos_Usuario`(`ID`,`juego_id`,`usuario_id`) VALUES (NULL,1,1);");
+    db.run("INSERT INTO `Juegos_Usuario`(`ID`,`juego_id`,`usuario_id`) VALUES (NULL,1,2);");
+    db.run("INSERT INTO `Juegos_Usuario`(`ID`,`juego_id`,`usuario_id`) VALUES (NULL,1,3);");
+    db.run("INSERT INTO `Juegos_Usuario`(`ID`,`juego_id`,`usuario_id`) VALUES (NULL,1,4);");
+    db.run("INSERT INTO `Juegos_Usuario`(`ID`,`juego_id`,`usuario_id`) VALUES (NULL,2,1);");
+    db.run("INSERT INTO `Juegos_Usuario`(`ID`,`juego_id`,`usuario_id`) VALUES (NULL,2,4);");
+    db.run("INSERT INTO `Juegos_Usuario`(`ID`,`juego_id`,`usuario_id`) VALUES (NULL,3,3);");
+    db.run("INSERT INTO `Juegos_Usuario`(`ID`,`juego_id`,`usuario_id`) VALUES (NULL,4,1);");
+    db.run("INSERT INTO `Juegos_Usuario`(`ID`,`juego_id`,`usuario_id`) VALUES (NULL,4,3);");
+    db.run("INSERT INTO `Juegos_Usuario`(`ID`,`juego_id`,`usuario_id`) VALUES (NULL,4,4);");
     
+
     /*var stmt = db.prepare("INSERT INTO lorem VALUES (?)");
     for (var i = 0; i < 10; i++) {
         stmt.run("Ipsum " + i);
