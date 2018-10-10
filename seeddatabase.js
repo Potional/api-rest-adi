@@ -34,11 +34,16 @@ db.serialize(function() {
     db.run("INSERT INTO `Companyia`(`ID`,`nombre`,`direccion`,`nif`,`telefono`) VALUES (NULL,'Electronic Arts','Edificio 3 Parque Empresarial Cristalia, Calle Vía de los Poblados, Madrid, Álava','7539514682 ','123456789');");
     db.run("INSERT INTO `Companyia`(`ID`,`nombre`,`direccion`,`nif`,`telefono`) VALUES (NULL,'Insomniac','2255 N Ontario St.Suite 550 Burbank, CA 91504','741963852','789456123');");
     db.run("INSERT INTO `Companyia`(`ID`,`nombre`,`direccion`,`nif`,`telefono`) VALUES (NULL,'Platinum Games','8F Tower West, Umeda Sky Building 1-1-30 Oyodonaka, Kita-ku, Osaka 531-6108 Japan','8974561231','84561356489');");
-    db.run("INSERT INTO `Usuario`(`ID`,`login`,`password`,`nombre`,`apellidos`,`email`,`fecha_nacimiento`,`tarjeta`, `permisos`) VALUES (NULL,`admin`,`admin`,`Jorge`,`Martin Abad`,`mrtin.abad.jorge@hotmail.com`,`28-11-1995`,`7777777777`,0);");
-    db.run("INSERT INTO `Usuario`(`ID`,`login`,`password`,`nombre`,`apellidos`,`email`,`fecha_nacimiento`,`tarjeta`, `permisos`) VALUES (NULL,`prueba1`,`prueba1`,`Prueba1`,`Prueba Prueba`,`prueba1@gmail.com`,`10-10-2018`,`111111111`,1);");
-    db.run("INSERT INTO `Usuario`(`ID`,`login`,`password`,`nombre`,`apellidos`,`email`,`fecha_nacimiento`,`tarjeta`, `permisos`) VALUES (NULL,`prueba2`,`prueba2`,`Prueba2`,`Prueba Prueba`,`prueba2@gmail.com`,`10-10-2018`,`222222222`,1);");
-    db.run("INSERT INTO `Usuario`(`ID`,`login`,`password`,`nombre`,`apellidos`,`email`,`fecha_nacimiento`,`tarjeta`, `permisos`) VALUES (NULL,`prueba3`,`prueba3`,`Prueba3`,`Prueba Prueba`,`prueba3@gmail.com`,`10-10-2018`,`333333333`,1);");
-
+    db.run("INSERT INTO `Usuario`(`ID`,`login`,`password`,`nombre`,`apellidos`,`email`,`fecha_nacimiento`,`tarjeta`, `permisos`) VALUES (NULL,'admin','admin','Jorge','Martin Abad','mrtin.abad.jorge@hotmail.com','28-11-1995','7777777777',0);");
+    db.run("INSERT INTO `Usuario`(`ID`,`login`,`password`,`nombre`,`apellidos`,`email`,`fecha_nacimiento`,`tarjeta`, `permisos`) VALUES (NULL,'prueba1','prueba1','Prueba1','Prueba Prueba','prueba1@gmail.com','10-10-2018','111111111',1);");
+    db.run("INSERT INTO `Usuario`(`ID`,`login`,`password`,`nombre`,`apellidos`,`email`,`fecha_nacimiento`,`tarjeta`, `permisos`) VALUES (NULL,'prueba2','prueba2','Prueba2','Prueba Prueba','prueba2@gmail.com','10-10-2018','222222222',1);");
+    db.run("INSERT INTO `Usuario`(`ID`,`login`,`password`,`nombre`,`apellidos`,`email`,`fecha_nacimiento`,`tarjeta`, `permisos`) VALUES (NULL,'prueba3','prueba3','Prueba3','Prueba Prueba','prueba3@gmail.com','10-10-2018','333333333',1);");
+    db.run("INSERT INTO `Juego`(`ID`,`nombre`,`descripcion`,`trailer`,`edad_recomendada`,`Requerimientos`,`desarrolladora_id`) VALUES (NULL,'Assasins Creed Odyssey','Un juego de assasins creed mas','https://youtu.be/xqUejiCy6Tk',18,'OS: Windows 7 SP1, Windows 8.1, Windows 10 (64bit versions only)" 
+    + "Processor: AMD FX 6300 @ 3.8 GHz, Ryzen 3 - 1200, Intel Core i5 2400 @ 3.1 GHz Memory: 8 GB RAM Graphics: AMD Radeon R9 285, NVIDIA GeForce GTX 660 (2GB VRAM with Shader Model 5.0) DirectX: Version 11 Storage: 46+ GB available space Video Preset: Lowest (720p)',1);");
+    db.run("INSERT INTO `Juego`(`ID`,`nombre`,`descripcion`,`trailer`,`edad_recomendada`,`Requerimientos`,`desarrolladora_id`) VALUES (NULL,'Star Wars: Battlefront','Juego magnifico 10/10 - IGN','https://youtu.be/ZwWLns7-xN8',18,'Windows 64-bits',2);");
+    db.run("INSERT INTO `Juego`(`ID`,`nombre`,`descripcion`,`trailer`,`edad_recomendada`,`Requerimientos`,`desarrolladora_id`) VALUES (NULL,'','','','','','');");
+    db.run("INSERT INTO `Juego`(`ID`,`nombre`,`descripcion`,`trailer`,`edad_recomendada`,`Requerimientos`,`desarrolladora_id`) VALUES (NULL,'','','','','','');");
+    
     /*var stmt = db.prepare("INSERT INTO lorem VALUES (?)");
     for (var i = 0; i < 10; i++) {
         stmt.run("Ipsum " + i);
