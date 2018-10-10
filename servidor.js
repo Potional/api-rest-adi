@@ -21,9 +21,9 @@ var knex = require('knex')({
 
 app.route('/juegos')
 .get(function(req, res) {
-  console.log('Lista de juegos');
+console.log('Lista de juegos');
     listarJuegos(function(datos){
-        resp.send(datos)
+        res.send(datos)
     })
 })
 .post(function(req, res) {
@@ -31,10 +31,10 @@ app.route('/juegos')
 });
 //################################################################################
 //##################################Acceso a datos################################
-function listarUsuarios(callback) {
+function listarJuegos(callback) {
     knex.select().from('Juego')
     .then(function(datos){
-      callback(datos)
+    callback(datos)
     })
 }
 //################################################################################
