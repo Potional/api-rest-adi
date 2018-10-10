@@ -6,15 +6,38 @@ var db = new sqlite3.Database('basedatosadi.db');
 //###########Seed de la base de datos###################################
 
 db.serialize(function() {
-    db.run("CREATE TABLE `Categoria` (`ID` INTEGER PRIMARY KEY AUTOINCREMENT,`nombre` TEXT NOT NULL)");
-    db.run("CREATE TABLE `Companyia` (`ID`	INTEGER PRIMARY KEY AUTOINCREMENT,`nombre`	TEXT,`direccion`	TEXT,`nif`	TEXT,`telefono`	NUMERIC)");
-    db.run("CREATE TABLE `Usuario` (`ID`	INTEGER PRIMARY KEY AUTOINCREMENT,`login`	TEXT,`password`	TEXT,`nombre`	TEXT,`apellidos`	TEXT,`email`	NUMERIC,`fecha_nacimiento`	TEXT,`tarjeta`	NUMERIC)");
-    db.run("CREATE TABLE `Juego` ( `ID` INTEGER PRIMARY KEY AUTOINCREMENT, `nombre` TEXT, `descripcion` TEXT, `trailer` BLOB, `edad_recomendada` INTEGER, `Requerimientos` TEXT, `desarrolladora_id` INTEGER, FOREIGN KEY(`desarrolladora_id`) REFERENCES `Categoria`(`ID`) ON DELETE CASCADE )");
-    db.run("CREATE TABLE `Opinion` ( `ID` INTEGER PRIMARY KEY AUTOINCREMENT, `usuario_id` INTEGER, `juego_id` INTEGER, `comentario` TEXT, FOREIGN KEY(`usuario_id`) REFERENCES `Usuario`(`ID`) ON DELETE SET NULL, FOREIGN KEY(`juego_id`) REFERENCES `Juego`(`ID`) ON DELETE CASCADE )");
-    db.run("CREATE TABLE `Categorias_Juego` ( `ID` INTEGER PRIMARY KEY AUTOINCREMENT, `categoria_id` INTEGER, `juego_id` INTEGER, FOREIGN KEY(`categoria_id`) REFERENCES `Categoria`(`ID`) ON DELETE CASCADE, FOREIGN KEY(`juego_id`) REFERENCES `Juego`(`ID`) ON DELETE CASCADE )");
-    db.run("CREATE TABLE `Amigos` ( `ID` INTEGER PRIMARY KEY AUTOINCREMENT, `usuario1_id` INTEGER, `usuario2_id` INTEGER, FOREIGN KEY(`usuario1_id`) REFERENCES `Usuario`(`ID`) ON DELETE CASCADE, FOREIGN KEY(`usuario2_id`) REFERENCES `Usuario`(`ID`) ON DELETE CASCADE )");
-    db.run("CREATE TABLE `Juegos_Usuario` ( `ID` INTEGER PRIMARY KEY AUTOINCREMENT, `juego_id` INTEGER, `usuario_id` INTEGER, FOREIGN KEY(`juego_id`) REFERENCES `Juego`(`ID`) ON DELETE CASCADE, FOREIGN KEY(`usuario_id`) REFERENCES `Usuario`(`ID`) ON DELETE CASCADE )");
-    db.run("CREATE TABLE `Usuario_compra` ( `ID` INTEGER PRIMARY KEY AUTOINCREMENT, `usuario_id` INTEGER, `juego_id` INTEGER, `cantidad` INTEGER, FOREIGN KEY(`usuario_id`) REFERENCES `Usuario`(`ID`) ON DELETE CASCADE, FOREIGN KEY(`juego_id`) REFERENCES `Juego`(`ID`) ON DELETE CASCADE )");
+    db.run("DROP TABLE IF EXISTS `Categoria`");
+    db.run("DROP TABLE IF EXISTS `Companyia`");
+    db.run("DROP TABLE IF EXISTS `Usuario`");
+    db.run("DROP TABLE IF EXISTS `Juego`");
+    db.run("DROP TABLE IF EXISTS `Opinion`");
+    db.run("DROP TABLE IF EXISTS `Categorias_Juego`");
+    db.run("DROP TABLE IF EXISTS `Amigos`");
+    db.run("DROP TABLE IF EXISTS `Juegos_Usuario`");
+    db.run("DROP TABLE IF EXISTS `Usuario_compra`");
+    db.run("CREATE TABLE IF NOT EXISTS `Categoria` (`ID` INTEGER PRIMARY KEY AUTOINCREMENT,`nombre` TEXT NOT NULL)");
+    db.run("CREATE TABLE IF NOT EXISTS `Companyia` (`ID`	INTEGER PRIMARY KEY AUTOINCREMENT,`nombre`	TEXT,`direccion`	TEXT,`nif`	TEXT,`telefono`	NUMERIC)");
+    db.run("CREATE TABLE IF NOT EXISTS `Usuario` (`ID`	INTEGER PRIMARY KEY AUTOINCREMENT,`login`	TEXT,`password`	TEXT,`nombre`	TEXT,`apellidos`	TEXT,`email`	NUMERIC,`fecha_nacimiento`	TEXT,`tarjeta`	NUMERIC,`permisos`	INTEGER)");
+    db.run("CREATE TABLE IF NOT EXISTS `Juego` ( `ID` INTEGER PRIMARY KEY AUTOINCREMENT, `nombre` TEXT, `descripcion` TEXT, `trailer` BLOB, `edad_recomendada` INTEGER, `Requerimientos` TEXT, `desarrolladora_id` INTEGER, FOREIGN KEY(`desarrolladora_id`) REFERENCES `Categoria`(`ID`) ON DELETE CASCADE )");
+    db.run("CREATE TABLE IF NOT EXISTS `Opinion` ( `ID` INTEGER PRIMARY KEY AUTOINCREMENT, `usuario_id` INTEGER, `juego_id` INTEGER, `comentario` TEXT, FOREIGN KEY(`usuario_id`) REFERENCES `Usuario`(`ID`) ON DELETE SET NULL, FOREIGN KEY(`juego_id`) REFERENCES `Juego`(`ID`) ON DELETE CASCADE )");
+    db.run("CREATE TABLE IF NOT EXISTS `Categorias_Juego` ( `ID` INTEGER PRIMARY KEY AUTOINCREMENT, `categoria_id` INTEGER, `juego_id` INTEGER, FOREIGN KEY(`categoria_id`) REFERENCES `Categoria`(`ID`) ON DELETE CASCADE, FOREIGN KEY(`juego_id`) REFERENCES `Juego`(`ID`) ON DELETE CASCADE )");
+    db.run("CREATE TABLE IF NOT EXISTS `Amigos` ( `ID` INTEGER PRIMARY KEY AUTOINCREMENT, `usuario1_id` INTEGER, `usuario2_id` INTEGER, FOREIGN KEY(`usuario1_id`) REFERENCES `Usuario`(`ID`) ON DELETE CASCADE, FOREIGN KEY(`usuario2_id`) REFERENCES `Usuario`(`ID`) ON DELETE CASCADE )");
+    db.run("CREATE TABLE IF NOT EXISTS `Juegos_Usuario` ( `ID` INTEGER PRIMARY KEY AUTOINCREMENT, `juego_id` INTEGER, `usuario_id` INTEGER, FOREIGN KEY(`juego_id`) REFERENCES `Juego`(`ID`) ON DELETE CASCADE, FOREIGN KEY(`usuario_id`) REFERENCES `Usuario`(`ID`) ON DELETE CASCADE )");
+    db.run("CREATE TABLE IF NOT EXISTS `Usuario_compra` ( `ID` INTEGER PRIMARY KEY AUTOINCREMENT, `usuario_id` INTEGER, `juego_id` INTEGER, `cantidad` INTEGER, FOREIGN KEY(`usuario_id`) REFERENCES `Usuario`(`ID`) ON DELETE CASCADE, FOREIGN KEY(`juego_id`) REFERENCES `Juego`(`ID`) ON DELETE CASCADE )");
+    db.run("INSERT INTO `Categoria`(`ID`,`nombre`) VALUES (NULL,'Accion')");
+    db.run("INSERT INTO `Categoria`(`ID`,`nombre`) VALUES (NULL,'Aventuras')");
+    db.run("INSERT INTO `Categoria`(`ID`,`nombre`) VALUES (NULL,'Disparos')");
+    db.run("INSERT INTO `Categoria`(`ID`,`nombre`) VALUES (NULL,'Estrategia')");
+    db.run("INSERT INTO `Categoria`(`ID`,`nombre`) VALUES (NULL,'Deportes')");
+    db.run("INSERT INTO `Categoria`(`ID`,`nombre`) VALUES (NULL,'Adultos')");
+    db.run("INSERT INTO `Companyia`(`ID`,`nombre`,`direccion`,`nif`,`telefono`) VALUES (NULL,'Bugisoft','Units 106-107 - Twofour 54-Building - Abu Dhabi - United Arab Emirates','7788477884','0097122344612');");
+    db.run("INSERT INTO `Companyia`(`ID`,`nombre`,`direccion`,`nif`,`telefono`) VALUES (NULL,'Electronic Arts','Edificio 3 Parque Empresarial Cristalia, Calle Vía de los Poblados, Madrid, Álava','7539514682 ','123456789');");
+    db.run("INSERT INTO `Companyia`(`ID`,`nombre`,`direccion`,`nif`,`telefono`) VALUES (NULL,'Insomniac','2255 N Ontario St.Suite 550 Burbank, CA 91504','741963852','789456123');");
+    db.run("INSERT INTO `Companyia`(`ID`,`nombre`,`direccion`,`nif`,`telefono`) VALUES (NULL,'Platinum Games','8F Tower West, Umeda Sky Building 1-1-30 Oyodonaka, Kita-ku, Osaka 531-6108 Japan','8974561231','84561356489');");
+    db.run("INSERT INTO `Usuario`(`ID`,`login`,`password`,`nombre`,`apellidos`,`email`,`fecha_nacimiento`,`tarjeta`, `permisos`) VALUES (NULL,`admin`,`admin`,`Jorge`,`Martin Abad`,`mrtin.abad.jorge@hotmail.com`,`28-11-1995`,`7777777777`,0);");
+    db.run("INSERT INTO `Usuario`(`ID`,`login`,`password`,`nombre`,`apellidos`,`email`,`fecha_nacimiento`,`tarjeta`, `permisos`) VALUES (NULL,`prueba1`,`prueba1`,`Prueba1`,`Prueba Prueba`,`prueba1@gmail.com`,`10-10-2018`,`111111111`,1);");
+    db.run("INSERT INTO `Usuario`(`ID`,`login`,`password`,`nombre`,`apellidos`,`email`,`fecha_nacimiento`,`tarjeta`, `permisos`) VALUES (NULL,`prueba2`,`prueba2`,`Prueba2`,`Prueba Prueba`,`prueba2@gmail.com`,`10-10-2018`,`222222222`,1);");
+    db.run("INSERT INTO `Usuario`(`ID`,`login`,`password`,`nombre`,`apellidos`,`email`,`fecha_nacimiento`,`tarjeta`, `permisos`) VALUES (NULL,`prueba3`,`prueba3`,`Prueba3`,`Prueba Prueba`,`prueba3@gmail.com`,`10-10-2018`,`333333333`,1);");
 
     /*var stmt = db.prepare("INSERT INTO lorem VALUES (?)");
     for (var i = 0; i < 10; i++) {

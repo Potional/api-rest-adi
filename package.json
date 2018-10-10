@@ -4,7 +4,7 @@
   "description": "Practica 1 API REST de ADI.",
   "main": "servidor.js",
   "scripts": {
-    "start": "touch basedatosadi.db && node seeddatabase.js && node servidor.js",
+    "start": "touch basedatosadi.db && node seeddatabase.js && nodemon servidor.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
