@@ -2,6 +2,9 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
+var jwt = require('jwt-simple');
+var moment = require('moment');  //para trabajar cómodamente con fechas
+var secret = '1234567890';
 
 const app = express();
 app.use(bodyParser.json());
@@ -15,7 +18,14 @@ var knex = require('knex')({
     }
 });
 
-//###############################################################################
+//###################Metodos Auxiliares !!!BORRAR!!!!############################
+
+app.route('/usuarios')
+.get(function(req,res){
+    knex.select().from('Usuario').then(function(datos){
+        res.send(datos)
+    })
+})
 
 //##################################Routas#######################################
 
@@ -62,6 +72,21 @@ app.route('/companyias/:id')
 app.route('/categorias')
 .get(function(req,res){
     listarCategorias(function(datos){
+        res.send(datos)
+    })
+});
+
+app.route('/login')
+.post(function(req,res){
+    var body = req.body;
+    logarse(body,function(datos){
+        res.send(datos);
+    })
+});
+
+app.route('/usuario/:id')
+.get(function(req,res){
+    mostrarDatosUsuario(parseInt(req.params.id),req.get('Authorization'),function(datos){
         res.send(datos)
     })
 })
@@ -113,6 +138,35 @@ function listarCategorias(callback){
     knex.select().from('Categoria').then(function(datos){
         callback(datos)
     })
+}
+
+function logarse(body,callback){
+    knex.select().from('Usuario').where({login: body.login}).where({password: body.password}).then(function(datos){
+        //suponiendo que esta todo bien
+        var payload = {
+            login: body.login,
+            exp: moment().add(30,'minutes').valueOf()
+        };
+        var token = jwt.encode(payload,secret);
+        callback(token);
+    })
+}
+
+function mostrarDatosUsuario(idurl,token,callback){
+
+    var decoded = jwt.decode(token.split(' ')[1],secret);
+    console.log(decoded)
+    if(decoded){
+        knex.select().from('Usuario').where({ID: idurl}).then(function(datos){
+            if(datos[0].login == decoded.login){
+                callback(datos);
+            }else{
+                callback('Error 401');        
+            }
+        })
+    } else {
+        callback('Error 401');
+    }
 }
 //################################################################################
 
