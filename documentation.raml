@@ -1,0 +1,38 @@
+#%RAML 1.0
+title: Tienda Juegos ADI
+version: v1
+protocols: [ HTTP, HTTPS ]
+description: "Documentacion de la API, que simula el funcionamiento de una tienda de videojuegos onnline."  
+baseUri: localhost:3000
+mediaType:  application/json
+/juegos:
+    get:
+        description: "Devuelve una lista con todos los juegos"
+        responses:
+            200:
+                description: "OK"
+/juego:
+    /{id}/{moneda}:
+        get:
+            description: "Devuelve los datos de ese juego en concreto convirtiendo el precio de dolares a el tipo de moneda que se le pase por parametro"
+/companyias:
+    get:
+        description: "Devuelve una lista con todas la companyias"
+    post:
+        description: "Crea una compañia con los datos que se le pasan en el cuerpo de la peticion y devuelve la id una vez se ha creado"
+    /{id}:
+        get:
+            description: "Devuelve la informacion de una compañia en concreto"
+        delete:
+            description: "Elimina la compañia que tiene la id que se le pasa por parametro"
+        put:
+            description: "Actualiza la compañia con los datos que se pasan en el cuerpo de la peticion"
+/categorias:
+    get:
+        description: "Devuelve una lista con todas las categorias"
+/usuario/{id}:
+    get:
+        description: "Devuelve los datos de el usuario. Solo el usuario con el mismo id puede ver los datos."
+/login:
+    post:
+        description: "Devuelve un token para poder atuenticarse, si los valores que se le pasan en el cuerpo de la peticion son correctos."
