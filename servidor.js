@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 var jwt = require('jwt-simple');
 var moment = require('moment');  //para trabajar cómodamente con fechas
 var secret = '1234567890';
+const fetch = require('node-fetch');
 
 const app = express();
 app.use(bodyParser.json());
@@ -18,7 +19,7 @@ var knex = require('knex')({
     }
 });
 
-//###################Metodos Auxiliares !!!BORRAR!!!!############################
+//##########################Metodos Admin################################
 
 app.route('/usuarios')
 .get(function(req,res){
@@ -32,22 +33,35 @@ app.route('/usuarios')
 app.route('/juegos')
 .get(function(req, res) {
     listarJuegos(function(datos){
-        res.send(datos)
+        res.status(200);
+        res.send(datos);
     })
-})
-.post(function(req, res) {
-    var body = req.body;
+});
+
+app.route('/juego/:id/:coin')
+.get(function(req, res) {
+    detallesJuego(parseInt(req.params.id), req.params.coin,function(datos){
+        if(!datos[0]){
+            res.status(404);
+            res.send("El recurso solicitado no existe");
+        } else {
+            res.status(200);
+            res.send(datos);
+        }
+    })
 });
 
 app.route('/companyias')
 .get(function(req,res){
     mostrarCompanyias(function(datos){
+        res.status(200);
         res.send(datos);
     });
 })
-.post(function(req,res){
+.post(checkCompanyiaFields,function(req,res){
     var body = req.body;
     crearCompanyia(body ,function(datos){
+        res.status(201);
         res.send(datos);
     });
 });
@@ -55,16 +69,28 @@ app.route('/companyias')
 app.route('/companyias/:id')
 .get(function(req,res){
     mostrarDatosCompanyia(parseInt(req.params.id),function(datos){
+        if(!datos[0]){
+            res.status(404);
+            res.send("El recurso solicitado no existe");
+        }
+        res.status(200);
         res.send(datos);
     });
 })
 .delete(function(req,res){
-    borrarCompanyia(parseInt(req.params.id), function(datos){
-        res.send(datos);
-    })
+    try{
+        borrarCompanyia(parseInt(req.params.id), function(datos){
+            res.status(200);
+            res.send(datos);
+        })
+    } catch(err){
+        res.status(404);
+        res.send("El recurso solicitado no existe");
+    }
 })
-.put(function(req,res){
+.put(checkCompanyiaFields,function(req,res){
     actualizarCompanyia(parseInt(req.params.id), req.body,function(datos){
+        res.status(200);
         res.send(datos);
     })
 });
@@ -72,6 +98,7 @@ app.route('/companyias/:id')
 app.route('/categorias')
 .get(function(req,res){
     listarCategorias(function(datos){
+        res.status(200);
         res.send(datos)
     })
 });
@@ -80,18 +107,56 @@ app.route('/login')
 .post(function(req,res){
     var body = req.body;
     logarse(body,function(datos){
+        res.status(200);
         res.send(datos);
     })
 });
 
 app.route('/usuario/:id')
-.get(function(req,res){
+.get(checkAuth,function(req,res){
     mostrarDatosUsuario(parseInt(req.params.id),req.get('Authorization'),function(datos){
+        if(datos == 'Error 401'){
+        res.status(401);
+        } else if(datos == 'Error 404'){
+            res.status(404);
+        } else {
+            res.status(200);
+        }
         res.send(datos)
     })
 })
 
 //################################################################################
+
+function checkAuth(req,res,next){
+    if(req.get('Authorization')){
+        var decoded = jwt.decode(req.get('Authorization').split(' ')[1],secret);
+            if(decoded.exp < moment().add(30,'seconds').valueOf()){
+                res.status(401);
+                res.send("La cuenta ha expirado")
+            } else {
+                next();
+            }
+    } else {
+        res.status(401);
+        res.send("Debes de registrarte para acceder a esta informacion")
+    }
+}
+
+function checkCompanyiaFields(req,res,next){
+    try{
+        if(req.body.nombre != "" && req.body.direccion != "" && req.body.nif != "" && req.body.telefono != ""){
+            next();
+        }else {
+            res.status(400);
+            res.send("Faltan datos o no son correctos");
+        }
+    } catch (err){
+        res.status(400);
+        res.send("Faltan datos o no son correctos");
+    }
+}
+
 //##################################Acceso a datos################################
 function listarJuegos(callback) {
     knex.select().from('Juego')
@@ -153,11 +218,12 @@ function logarse(body,callback){
 }
 
 function mostrarDatosUsuario(idurl,token,callback){
-
     var decoded = jwt.decode(token.split(' ')[1],secret);
-    console.log(decoded)
     if(decoded){
         knex.select().from('Usuario').where({ID: idurl}).then(function(datos){
+            if(!datos[0]){
+                callback('Error 404');        
+            }
             if(datos[0].login == decoded.login){
                 callback(datos);
             }else{
@@ -168,8 +234,32 @@ function mostrarDatosUsuario(idurl,token,callback){
         callback('Error 401');
     }
 }
+
+function detallesJuego(idurl,coinurl,callback){
+    knex('Juego').where('ID',idurl).then(
+        function(datos){
+            var monedaBase = 'USD' + coinurl;
+            if(datos[0]){
+                fetch('http://apilayer.net/api/live?access_key=cbd17f850c1e2205f8181421d5eb6d1a&currencies=' + coinurl)
+                .then(res => res.json())
+                .then((respapi) => {
+                if(respapi.success == true){
+                    var stringi = JSON.stringify(respapi['quotes']);
+                    var quotes = JSON.parse(stringi);
+                    datos[0].precio = parseFloat(datos[0].precio) * parseFloat(quotes[monedaBase]);
+                } else {
+                    datos = [];
+                }
+                callback(datos);
+                }).catch(function(err){console.log()});
+            } else {
+            callback(datos);
+            }
+        }
+    )
+}
 //################################################################################
 
 app.listen(3000,function(){
-    console.log("¿Esta corriendo el servidor en el puerto 3000? Pa k kiere saber eso, jaja salu2");
+    console.log("El servidor esta corriendo en el puerto 3000");
 });
