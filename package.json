@@ -5,7 +5,7 @@
   "main": "servidor.js",
   "scripts": {
     "start": "touch basedatosadi.db && node seeddatabase.js && nodemon servidor.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test-servidor.js"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "mocha": "^5.2.0",
-    "nodemon": "^1.18.4"
+    "nodemon": "^1.18.4",
+    "supertest": "^3.3.0"
   }
 }

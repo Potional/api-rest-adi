@@ -1,0 +1,747 @@
+{
+	"info": {
+		"_postman_id": "76a63390-13f3-4139-8d9d-2cbfb86e1bb6",
+		"name": "ADI",
+		"description": "# Introduction\nAPI que simula el funcionamiento de una tienda onnline de videojuegos\n\n# Overview\nPractica ADI 2018\n\n# Authentication\nAutenticacion por token\n\n# Error Codes\nPuede haber algun error\n\n# Rate limit\nNo hay limiite",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:3000/companyias",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6405f73e-7428-4d43-ab5c-0fa280163157",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"lista de juegos correcta\", function () { ",
+							"    pm.response.to.have.body('[{\"ID\":1,\"nombre\":\"Bugisoft\",\"direccion\":\"Units 106-107 - Twofour 54-Building - Abu Dhabi - United Arab Emirates\",\"nif\":\"7788477884\",\"telefono\":97122344612},{\"ID\":2,\"nombre\":\"Electronic Arts\",\"direccion\":\"Edificio 3 Parque Empresarial Cristalia, Calle Vía de los Poblados, Madrid, Álava\",\"nif\":\"7539514682 \",\"telefono\":123456789},{\"ID\":3,\"nombre\":\"Insomniac\",\"direccion\":\"2255 N Ontario St.Suite 550 Burbank, CA 91504\",\"nif\":\"741963852\",\"telefono\":789456123},{\"ID\":4,\"nombre\":\"Platinum Games\",\"direccion\":\"8F Tower West, Umeda Sky Building 1-1-30 Oyodonaka, Kita-ku, Osaka 531-6108 Japan\",\"nif\":\"8974561231\",\"telefono\":84561356489}]')",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"ola\", \n\t\"direccion\": \"ola\",\n\t\"nif\": \"4234124341\",\n\t\"telefono\": 9888897\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/companyias",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"companyias"
+					]
+				},
+				"description": "prueba post compañia"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/companyias Crear Compañia",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6405f73e-7428-4d43-ab5c-0fa280163157",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"devuelve un id\", function () {",
+							"    pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.value);",
+							"});",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"ola\", \n\t\"direccion\": \"ola\",\n\t\"nif\": \"4234124341\",\n\t\"telefono\": 9888897\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/companyias",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"companyias"
+					]
+				},
+				"description": "prueba post compañia"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/companyias/3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "58a96de3-d608-4ddf-a05f-19ce121215d1",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Compañia correcta\", function () { ",
+							"    pm.response.to.have.body('[{\"ID\":1,\"nombre\":\"Bugisoft\",\"direccion\":\"Units 106-107 - Twofour 54-Building - Abu Dhabi - United Arab Emirates\",\"nif\":\"7788477884\",\"telefono\":97122344612}]');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"ID\": 3,\n        \"nombre\": \"Prueba1\",\n        \"direccion\": \"2255 N Ontario St.Suite 550 Burbank, CA 91504\",\n        \"nif\": \"741963852\",\n        \"telefono\": 789456123\n    }"
+				},
+				"url": {
+					"raw": "localhost:3000/companyias/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"companyias",
+						"1"
+					]
+				},
+				"description": "compañia numero 3"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/companyias/3 Update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "58a96de3-d608-4ddf-a05f-19ce121215d1",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Compañia update correcta\", function () { ",
+							"    pm.response.to.have.body('[{\"ID\":3,\"nombre\":\"Prueba1\",\"direccion\":\"2255 N Ontario St.Suite 550 Burbank, CA 91504\",\"nif\":\"741963852\",\"telefono\":789456123}]');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"ID\": 3,\n        \"nombre\": \"Prueba1\",\n        \"direccion\": \"2255 N Ontario St.Suite 550 Burbank, CA 91504\",\n        \"nif\": \"741963852\",\n        \"telefono\": 789456123\n    }"
+				},
+				"url": {
+					"raw": "localhost:3000/companyias/3",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"companyias",
+						"3"
+					]
+				},
+				"description": "compañia numero 3"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/companyias/4 Borrado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "58a96de3-d608-4ddf-a05f-19ce121215d1",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Compañia correcta\", function () { ",
+							"    pm.response.to.have.body('Companyia borrada con exito');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"ID\": 3,\n        \"nombre\": \"Prueba1\",\n        \"direccion\": \"2255 N Ontario St.Suite 550 Burbank, CA 91504\",\n        \"nif\": \"741963852\",\n        \"telefono\": 789456123\n    }"
+				},
+				"url": {
+					"raw": "localhost:3000/companyias/4",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"companyias",
+						"4"
+					]
+				},
+				"description": "compañia numero 3"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/companyias/3 Update Err 404",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "58a96de3-d608-4ddf-a05f-19ce121215d1",
+						"exec": [
+							"pm.test(\"response is ko\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Compañia update no existe\", function () { ",
+							"    pm.response.to.have.body('El recurso solicitado no existe');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"ID\": 3,\n        \"nombre\": \"Prueba1\",\n        \"direccion\": \"2255 N Ontario St.Suite 550 Burbank, CA 91504\",\n        \"nif\": \"741963852\",\n        \"telefono\": 789456123\n    }"
+				},
+				"url": {
+					"raw": "localhost:3000/companyias/4",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"companyias",
+						"4"
+					]
+				},
+				"description": "compañia numero 3"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/juegos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "24c30ce2-a78d-445a-9925-edf826f9ae60",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"lista de juegos correcta\", function () { ",
+							"    pm.response.to.have.body('[{\"ID\":1,\"nombre\":\"Assasins Creed Odyssey\",\"descripcion\":\"Un juego de assasins creed mas\",\"trailer\":\"https://youtu.be/xqUejiCy6Tk\",\"edad_recomendada\":18,\"Requerimientos\":\"OS: Windows 7 SP1, Windows 8.1, Windows 10 (64bit versions only)Processor: AMD FX 6300 @ 3.8 GHz, Ryzen 3 - 1200, Intel Core i5 2400 @ 3.1 GHz Memory: 8 GB RAM Graphics: AMD Radeon R9 285, NVIDIA GeForce GTX 660 (2GB VRAM with Shader Model 5.0) DirectX: Version 11 Storage: 46+ GB available space Video Preset: Lowest (720p)\",\"precio\":null,\"desarrolladora_id\":1},{\"ID\":2,\"nombre\":\"Star Wars: Battlefront\",\"descripcion\":\"Juego magnifico 10/10 - IGN\",\"trailer\":\"https://youtu.be/ZwWLns7-xN8\",\"edad_recomendada\":18,\"Requerimientos\":\"Windows 64-bits\",\"precio\":60,\"desarrolladora_id\":2},{\"ID\":3,\"nombre\":\"Spiderman\",\"descripcion\":\"Un buen juego de Spiderman\",\"trailer\":\"https://youtu.be/q4GdJVvdxss\",\"edad_recomendada\":18,\"Requerimientos\":\"PS4\",\"precio\":60,\"desarrolladora_id\":3},{\"ID\":4,\"nombre\":\"Nier:Automata\",\"descripcion\":\"Un buen juego de Nier\",\"trailer\":\"https://youtu.be/YKI1Jh43Ju8\",\"edad_recomendada\":18,\"Requerimientos\":\"PS4\",\"precio\":60,\"desarrolladora_id\":4}]')",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"url": {
+					"raw": "localhost:3000/juegos",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"juegos"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": ""
+						}
+					]
+				},
+				"description": "lista de juegos"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/categorias",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f2f5360c-2977-4649-963a-1618bbec5e8e",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"lista de juegos correcta\", function () { ",
+							"    pm.response.to.have.body('[{\"ID\":1,\"nombre\":\"Accion\"},{\"ID\":2,\"nombre\":\"Aventuras\"},{\"ID\":3,\"nombre\":\"Disparos\"},{\"ID\":4,\"nombre\":\"Estrategia\"},{\"ID\":5,\"nombre\":\"Deportes\"},{\"ID\":6,\"nombre\":\"Adultos\"}]')",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/categorias",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"categorias"
+					]
+				},
+				"description": "lista de categorias"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e9f22d2a-ca25-4eb8-b4b3-3f21d9aa6d1e",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body is correct\", function () {",
+							"    pm.response.to.not.have.body(\"Error en la autenticacion\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"login\": \"admin\",\n\t\"password\": \"admin\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				},
+				"description": "login de usuario"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/login Error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e9f22d2a-ca25-4eb8-b4b3-3f21d9aa6d1e",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"",
+							"pm.test(\"Body is correct\", function () {",
+							"    pm.response.to.have.body(\"Error en la autenticacion\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"login\": \"fdsfdsfd\",\n\t\"password\": \"fsdfsffdsffs\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				},
+				"description": "login de usuario"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/usuario/1 Detalles admin token 30 años",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a34792f9-3fcf-4c45-b191-5356ae630764",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Detalles correctos\", function () { ",
+							"    pm.response.to.have.body('[{\"ID\":1,\"login\":\"admin\",\"password\":\"admin\",\"nombre\":\"Jorge\",\"apellidos\":\"Martin Abad\",\"email\":\"mrtin.abad.jorge@hotmail.com\",\"fecha_nacimiento\":\"28-11-1995\",\"tarjeta\":7777777777,\"permisos\":0}]');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbiI6ImFkbWluIiwiZXhwIjoyNDg4MDQyNDM4ODcwfQ.1Cr2letAD4CCBJbcFLMPGtQGik6AF7D-Qh5sprGG1F0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/usuario/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuario",
+						"1"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				},
+				"description": "datos usuario"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/usuario/1 Detalles otro user token 30 años",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a34792f9-3fcf-4c45-b191-5356ae630764",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"",
+							"pm.test(\"Detalles no acesibles\", function () { ",
+							"    pm.response.to.have.body('Error 401');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbiI6ImFkbWluIiwiZXhwIjoyNDg4MDQyNDM4ODcwfQ.1Cr2letAD4CCBJbcFLMPGtQGik6AF7D-Qh5sprGG1F0"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/usuario/2",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuario",
+						"2"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				},
+				"description": "datos usuario"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/usuario/1 Detalles usuario inexistente token 30 años",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a34792f9-3fcf-4c45-b191-5356ae630764",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Detalles no acesibles\", function () { ",
+							"    pm.response.to.have.body('Error 404');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbiI6ImFkbWluIiwiZXhwIjoyNDg4MDQyNDM4ODcwfQ.1Cr2letAD4CCBJbcFLMPGtQGik6AF7D-Qh5sprGG1F0"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/usuario/9",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuario",
+						"9"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				},
+				"description": "datos usuario"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/juego/2/EUR",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "53c5e57f-be67-4caf-b3a6-e3399fcef19b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"precio OK\",function (){",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0].precio).to.eql(52.6845);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/juego/2/EUR",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"juego",
+						"2",
+						"EUR"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/juego/8/LLL 404",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "53c5e57f-be67-4caf-b3a6-e3399fcef19b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"precio OK\",function (){",
+							"    pm.response.to.have.body(\"El recurso solicitado no existe\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/juego/8/LLL",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"juego",
+						"8",
+						"LLL"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

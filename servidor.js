@@ -90,9 +90,14 @@ app.route('/companyias/:id')
 })
 .put(checkCompanyiaFields,function(req,res){
     actualizarCompanyia(parseInt(req.params.id), req.body,function(datos){
-        res.status(200);
-        res.send(datos);
-    })
+        if(!datos[0]){
+            res.status(404);
+            res.send("El recurso solicitado no existe");
+        } else {
+            res.status(200);
+            res.send(datos);
+        }
+    });
 });
 
 app.route('/categorias')
@@ -107,8 +112,14 @@ app.route('/login')
 .post(function(req,res){
     var body = req.body;
     logarse(body,function(datos){
-        res.status(200);
-        res.send(datos);
+        if(!datos[0]){
+            res.status(401);
+            res.send("Error en la autenticacion");
+        } else {
+            res.status(200);
+            res.send(datos);
+        }
+        
     })
 });
 
@@ -206,15 +217,24 @@ function listarCategorias(callback){
 }
 
 function logarse(body,callback){
-    knex.select().from('Usuario').where({login: body.login}).where({password: body.password}).then(function(datos){
-        //suponiendo que esta todo bien
-        var payload = {
-            login: body.login,
-            exp: moment().add(30,'minutes').valueOf()
-        };
-        var token = jwt.encode(payload,secret);
-        callback(token);
-    })
+    try{
+        knex.select().from('Usuario').where({login: body.login}).where({password: body.password}).then(function(datos){
+            if(!datos[0]){
+                callback(datos)
+            } else {
+                //suponiendo que esta todo bien
+                var payload = {
+                    login: body.login,
+                    exp: moment().add(30,'minutes').valueOf()
+                };
+                var token = jwt.encode(payload,secret);
+                callback(token);
+            }
+        })
+    } catch(err){
+        var datos = [];
+        callback(datos);
+    }
 }
 
 function mostrarDatosUsuario(idurl,token,callback){
@@ -223,8 +243,7 @@ function mostrarDatosUsuario(idurl,token,callback){
         knex.select().from('Usuario').where({ID: idurl}).then(function(datos){
             if(!datos[0]){
                 callback('Error 404');        
-            }
-            if(datos[0].login == decoded.login){
+            } else if(datos[0].login == decoded.login){
                 callback(datos);
             }else{
                 callback('Error 401');        
@@ -263,3 +282,5 @@ function detallesJuego(idurl,coinurl,callback){
 app.listen(3000,function(){
     console.log("El servidor esta corriendo en el puerto 3000");
 });
+
+module.exports = app;
