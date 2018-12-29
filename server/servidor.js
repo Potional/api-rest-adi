@@ -2,6 +2,7 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
+var cors = require('cors');
 var jwt = require('jwt-simple');
 var moment = require('moment');  //para trabajar cómodamente con fechas
 var secret = '1234567890';
@@ -9,6 +10,7 @@ const fetch = require('node-fetch');
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
 
 //###########Conexion a la base de datos###################################
 
@@ -36,6 +38,13 @@ app.route('/juegos')
         res.status(200);
         res.send(datos);
     })
+})
+.post(function(req, res) {
+    var body = req.body;
+    crearJuegos(body, function(datos){
+        res.status(201);
+        res.send(datos);
+    })
 });
 
 app.route('/juego/:id/:coin')
@@ -48,6 +57,12 @@ app.route('/juego/:id/:coin')
             res.status(200);
             res.send(datos);
         }
+    })
+})
+.delete(function(req,res){
+    borrarJuego(parseInt(req.params.id),function(datos){
+        res.status = 200;
+        res.send('Borrado con exito')
     })
 });
 
@@ -135,6 +150,12 @@ app.route('/usuario/:id')
         }
         res.send(datos)
     })
+})
+
+app.route('/checkAuth')
+.post(checkAuth,function(req,res){
+    res.status(200);
+    res.send('OK');
 })
 
 //################################################################################
@@ -276,6 +297,21 @@ function detallesJuego(idurl,coinurl,callback){
             }
         }
     )
+}
+
+//####################################PR2##########################################
+function crearJuegos(body, callback){
+    knex('Juego').insert({ID: null, nombre: body.nombre, descripcion: body.descripcion, trailer: body.trailer, edad_recomendada: body.edad_recomendada, Requerimientos: body.Requerimientos, precio: body.precio, desarrolladora_id: body.desarrolladora_id}).then(function(datos){
+        var json = {};
+        json.ID = datos[0];
+        callback(json)
+    })
+}
+
+function borrarJuego(idurl,callback){
+    knex('Juego').where('ID', idurl).del().then(function(datos){
+        callback('Juego borrado con exito')
+    });
 }
 //################################################################################
 

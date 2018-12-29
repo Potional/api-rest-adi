@@ -1,0 +1,41 @@
+.container-login{
+    width: 65%;
+}
+
+.input-login{
+    width: 70%;
+    margin-left: 20%;
+}
+
+.label-login{
+    position: absolute;
+    padding-top: 1%;
+    padding-left: 2%;
+}
+
+.alert-login{
+    margin-top: 3%;
+}
+
+.bg-navbar{
+    background-color: #f00;
+}
+
+.navbar-display-mio{
+    display: contents;
+}
+
+.username{
+    margin-right: -15%;
+}
+
+.navbar-dark .navbar-nav  .nav-item-mio{
+    color: rgb(0, 0, 0);
+}
+
+.container-tabla{
+    width: 75%;
+    background: white;
+    margin-top: 5%;
+    margin-bottom: 2%;
+}
